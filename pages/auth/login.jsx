@@ -97,15 +97,24 @@ const Login = () => {
                 />
               )}
             </div>
-            <label className="">
-              {errors.password ? (
-                <span className="text-red-500 label-text-alt">
-                  Password is required!
-                </span>
-              ) : (
-                <span className="label-text-alt"></span>
-              )}
-            </label>
+            <div className="flex justify-between items-center">
+              <label className="">
+                {errors.password ? (
+                  <span className="text-red-500 label-text-alt">
+                    Password is required!
+                  </span>
+                ) : (
+                  <span className="label-text-alt"></span>
+                )}
+              </label>
+              <label className="">
+                <Link href="/auth/password-forget">
+                  <span className="label-text-alt hover:underline cursor-pointer">
+                    Forgot Password?
+                  </span>
+                </Link>
+              </label>
+            </div>
           </div>
           <button
             className={`w-full mt-6 ${
