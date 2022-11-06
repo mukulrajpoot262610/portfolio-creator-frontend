@@ -3,16 +3,17 @@ import React from 'react';
 
 const Header = () => {
   return (
-    <main>
+    <main className='back-grad'>
       <Head>
         <title>Creator</title>
       </Head>
 
-      <section className="min-h-screen w-full back-grad flex justify-center items-center">
+      <section className="min-h-screen w-full  flex justify-center items-center max-w-7xl mx-auto">
         <div className="flex justify-center items-center container mx-auto pt-16 w-11/12">
           <div className="w-1/2">
-            <h1 className="text-white text-7xl leading-snug font-bold">
-              The live audio app that pushes your voice to a new dimension
+            <h1 className="text-white text-5xl leading-tight font-bold">
+              Create a professional-grade
+              portfolio website within a few clicks
             </h1>
           </div>
           <div className="w-1/2">
