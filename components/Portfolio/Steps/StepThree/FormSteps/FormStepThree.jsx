@@ -1,9 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 const FormStepThree = () => {
-    return (
-        <div>FormStepThree</div>
-    )
-}
+  return <div>FormStepThree</div>;
+};
 
-export default FormStepThree
+export default FormStepThree;

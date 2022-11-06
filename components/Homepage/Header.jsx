@@ -3,7 +3,7 @@ import React from 'react';
 
 const Header = () => {
   return (
-    <main className='back-grad'>
+    <main className="back-grad">
       <Head>
         <title>Creator</title>
       </Head>
@@ -12,8 +12,7 @@ const Header = () => {
         <div className="flex justify-center items-center container mx-auto pt-16 w-11/12">
           <div className="w-1/2">
             <h1 className="text-white text-5xl leading-tight font-bold">
-              Create a professional-grade
-              portfolio website within a few clicks
+              Create a professional-grade portfolio website within a few clicks
             </h1>
           </div>
           <div className="w-1/2">

@@ -1,9 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 const FormStepFour = () => {
-    return (
-        <div>FormStepFour</div>
-    )
-}
+  return <div>FormStepFour</div>;
+};
 
-export default FormStepFour
+export default FormStepFour;
