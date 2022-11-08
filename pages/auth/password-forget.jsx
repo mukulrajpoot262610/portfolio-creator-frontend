@@ -34,11 +34,11 @@ const ForgetPassowrd = () => {
     <div className="flex items-center justify-center min-h-screen gap-20 w-11/12 mx-auto">
       <div className="w-full p-6 lg:w-1/3">
         <a className="flex flex-col items-center gap-2">
-          <img
+          {/* <img
             alt="metrack-logo"
             src="/logo.png"
             className="object-contain w-24 h-12"
-          />
+          /> */}
           <h1 className="text-3xl font-bold tracking-tight text-center uppercase cursor-pointer">
             Forgot Password
           </h1>

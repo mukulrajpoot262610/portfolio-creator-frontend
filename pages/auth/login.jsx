@@ -1,14 +1,18 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-// import { setAuth } from "redux/authSlice";
-// import { login } from "services/api";
+import { useDispatch } from 'react-redux';
+import { setAuth } from '../../redux/authSlice';
+import { login } from '../../services/api';
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const [toggelFieldType, setToggleFieledType] = useState(false);
-
+  const dispatch = useDispatch();
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -17,30 +21,29 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     setLoading(true);
-    console.log(data);
-    // try {
-    //     const res = await login(data);
-    //     dispatch(setAuth(res.data));
-    //     router.push("/dashboard");
-    //     setLoading(false);
-    // } catch (err) {
-    //     // console.log(err);
-    //     setLoading(false);
-    //     toast.error(err?.response?.data?.msg || err?.message);
-    // }
+    try {
+      const res = await login(data);
+      dispatch(setAuth(res.data));
+      router.push('/dashboard');
+      setLoading(false);
+    } catch (err) {
+      // console.log(err);
+      setLoading(false);
+      toast.error(err?.response?.data?.msg || err?.message);
+    }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen gap-20 w-11/12 mx-auto">
       <div className="w-full p-6 lg:w-1/3">
         <a className="flex flex-col items-center gap-2 mb-6">
-          <img
+          {/* <img
             alt="Logo"
             src="/logo.png"
             className="object-contain w-24 h-12"
-          />
+          /> */}
           <h1 className="text-3xl font-bold tracking-tight text-center uppercase">
-            Welcome Back to <span className="text-blue-500">ME</span>Track
+            Welcome Back to <span className="text-blue-500">DEV</span>Folio
           </h1>
         </a>
 

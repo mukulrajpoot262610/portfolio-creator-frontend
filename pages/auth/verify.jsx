@@ -22,9 +22,11 @@ const VerifyEmail = () => {
 
         <p className="text-center text-gray-400">
           Wrong email address?{' '}
-          <span className="font-bold text-blue-400 cursor-pointer hover:underline">
-            Change email{' '}
-          </span>
+          <Link href="/auth/register">
+            <span className="font-bold text-blue-400 cursor-pointer hover:underline">
+              Change email{' '}
+            </span>
+          </Link>
         </p>
 
         <div className="flex items-center justify-center mt-6 ">

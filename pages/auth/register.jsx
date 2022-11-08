@@ -1,13 +1,18 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-// import { setAuth } from "redux/authSlice";
-// import { register as signup } from "services/api";
+import { useDispatch } from 'react-redux';
+import { setAuth } from '../../redux/authSlice';
+import { register as signup } from '../../services/api';
 
 const Register = () => {
   const [loading, setLoading] = useState(false);
   const [toggelFieldType, setToggleFieledType] = useState(false);
+  const router = useRouter();
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -16,35 +21,33 @@ const Register = () => {
 
   const onSubmit = async (payload) => {
     setLoading(true);
-    console.log(payload);
-    // try {
-    //     const { data } = await signup(payload);
-    //     router.push("/dashboard");
-    //     toast.success("Registration Success 🎉");
-    //     dispatch(setAuth(data));
-    // } catch (err) {
-    //     // console.log(err);
-    //     toast.error(err?.response?.data?.msg);
-    // } finally {
-    //     setLoading(false);
-    // }
+    try {
+      const { data } = await signup(payload);
+      toast.success('Registration Success 🎉');
+      dispatch(setAuth(data));
+    } catch (err) {
+      console.log(err);
+      toast.error(err?.response?.data?.msg);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen gap-20 w-11/12 mx-auto">
       <div className="w-full p-6 lg:w-1/3">
         <a className="flex flex-col items-center gap-2 mb-2">
-          <img
+          {/* <img
             alt="logo"
             src="/logo.png"
             className="object-contain w-24 h-12"
-          />
+          /> */}
           <h1 className="text-3xl font-bold tracking-tight text-center uppercase cursor-pointer">
-            Welcome to <span className="text-blue-500">ME</span>Track
+            Welcome to <span className="text-blue-500">DEV</span>Folio
           </h1>
         </a>
         <p className="mb-4 text-xs text-center">
-          Join Metrack for Free and explore the new learing experience
+          Join DEVFolio for Free and explore the new website experience
         </p>
 
         <form onSubmit={handleSubmit(onSubmit)}>
