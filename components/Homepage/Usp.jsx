@@ -11,7 +11,7 @@ const Usp = () => {
 
         <div className="flex justify-center items-center">
           <img
-            src="https://oncie.live/static/Dashboard-7f58a6fd2211aecf54ebf1dd8eb4fbe6.png"
+            src="https://devfolio.io/static/media/hero-template.e50cacd4.png"
             className="w-2/3"
           />
         </div>

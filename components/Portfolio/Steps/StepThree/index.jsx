@@ -49,15 +49,11 @@ const StepThree = ({ setActive }) => {
         </div>
 
         <div className="w-full">
-          {formStep === 0 && <FormStepOne />}
-          {formStep === 1 && <FormStepTwo />}
-          {formStep === 2 && <FormStepThree />}
-          {formStep === 3 && <FormStepFour />}
+          {formStep === 0 && <FormStepOne setFormStep={setFormStep} />}
+          {formStep === 1 && <FormStepTwo setFormStep={setFormStep} />}
+          {formStep === 2 && <FormStepThree setFormStep={setFormStep} />}
+          {formStep === 3 && <FormStepFour setFormStep={setFormStep} />}
         </div>
-
-        <button onClick={() => setActive(2)} className="btn btn-wide mt-6">
-          Save
-        </button>
       </div>
     </div>
   );

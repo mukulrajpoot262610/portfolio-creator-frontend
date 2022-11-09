@@ -1,7 +1,12 @@
 import React from 'react';
 import { FaUsers } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { setPayload } from '../../redux/portfolioSlice';
 
 const TemplateCard = ({ data, setSelected, selected }) => {
+  const { portfolio } = useSelector((state) => state.payload);
+  const dispatch = useDispatch();
+
   function truncateString(str, num) {
     if (str?.length > num) {
       return str.slice(0, num) + '...';
@@ -10,11 +15,16 @@ const TemplateCard = ({ data, setSelected, selected }) => {
     }
   }
 
+  const handleSelectTemplate = () => {
+    dispatch(setPayload({ data: { ...portfolio, template: data.code } }));
+    setSelected(data.code);
+  };
+
   return (
     <div
-      onClick={() => setSelected(data.id)}
+      onClick={handleSelectTemplate}
       className={`max-w-sm duration-200 border-2 ${
-        data.id === selected && 'border-black'
+        data.code === selected && 'border-black'
       } cursor-pointer hover:shadow-lg card bg-base-100`}
     >
       <figure className="aspect-w-2 aspect-h-1">
@@ -37,7 +47,7 @@ const TemplateCard = ({ data, setSelected, selected }) => {
             </p>
           </div>
           <div
-            onClick={() => setSelected(data.id)}
+            onClick={handleSelectTemplate}
             className="text-xs border border-blue-200 btn btn-sm btn-ghost hover:bg-blue-50"
           >
             Select Template

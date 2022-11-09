@@ -1,5 +1,9 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
+import { setPayload } from '../../../redux/portfolioSlice';
+import { checkDomain } from '../../../services/api';
 
 const StepOne = ({ setActive }) => {
   const {
@@ -8,9 +12,17 @@ const StepOne = ({ setActive }) => {
     formState: { errors },
   } = useForm();
 
+  const dispatch = useDispatch();
+
   const onSubmit = async (data) => {
-    console.log(data);
-    setActive(1);
+    try {
+      const res = await checkDomain(data);
+      dispatch(setPayload({ data }));
+      setActive(1);
+    } catch (err) {
+      toast.error(err?.response?.data?.msg);
+      console.log(err);
+    }
   };
 
   return (

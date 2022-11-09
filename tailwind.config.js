@@ -8,6 +8,9 @@ module.exports = {
       colors: {
         primary: '#F9F9FA',
       },
+      fontSize: {
+        '10xl': '32rem',
+      },
     },
   },
   plugins: [require('daisyui')],

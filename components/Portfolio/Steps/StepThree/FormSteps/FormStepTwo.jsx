@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 const FormStepTwo = () => {
   const [tags, setTags] = useState([]);
+
   const tagElements = tags.map((i) => {
     return (
       <>

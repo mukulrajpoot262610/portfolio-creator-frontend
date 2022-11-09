@@ -1,21 +1,59 @@
-import React, { useState } from 'react';
+import Link from 'next/link';
+import React from 'react';
+import { BiPlus } from 'react-icons/bi';
 import Sidebar from '../../components/dashboard/Sidebar';
-import StepOne from '../../components/Portfolio/Steps/StepOne';
-import StepThree from '../../components/Portfolio/Steps/StepThree';
-import StepTwo from '../../components/Portfolio/Steps/StepTwo';
+import PortfolioCard from '../../components/Portfolio/PortfolioCard';
+import { ProtectedRoute } from '../../utils/ProtectedRoute';
+
+const PORTFOLIOS = [
+  {
+    id: '1',
+    image: 'https://devfolio.io/static/media/template-03.1e907d27.png',
+    domain: 'mukulrajpoot',
+    template: 'richard hendricks',
+  },
+  {
+    id: '2',
+    image: 'https://devfolio.io/static/media/template-03.1e907d27.png',
+    domain: 'mukulrajpoot',
+    template: 'richard hendricks',
+  },
+  {
+    id: '3',
+    image: 'https://devfolio.io/static/media/template-03.1e907d27.png',
+    domain: 'mukulrajpoot',
+    template: 'richard hendricks',
+  },
+];
 
 const Portfolio = () => {
-  const [active, setActive] = useState(0);
-
   return (
-    <div className="grid grid-cols-12 min-h-screen">
-      <Sidebar />
-      <section className="col-span-12 w-11/12 ml-auto bg-gray-100 p-16">
-        {active === 0 && <StepOne setActive={setActive} />}
-        {active === 1 && <StepTwo setActive={setActive} />}
-        {active === 2 && <StepThree setActive={setActive} />}
-      </section>
-    </div>
+    <ProtectedRoute>
+      <div className="grid grid-cols-12 min-h-screen">
+        <div className="col-span-1">
+          <Sidebar />
+        </div>
+        <section className="col-span-11 bg-gray-100 p-16 flex justify-center items-center">
+          <div className="w-10/12">
+            <div className="w-full flex justify-between items-center">
+              <h1 className="text-4xl font-bold mb-2">Portfolios!</h1>
+              <Link href="/portfolio/edit">
+                <button className="btn">
+                  <BiPlus className="mr-1 text-xl" />
+                  Create Portfolio
+                </button>
+              </Link>
+            </div>
+
+            <div className="w-full mt-10  flex flex-col gap-4">
+              {PORTFOLIOS.map((portfolio) => (
+                <PortfolioCard key={portfolio.id} data={portfolio} />
+              ))}
+            </div>
+          </div>
+        </section>
+      </div>
+    </ProtectedRoute>
   );
 };
 

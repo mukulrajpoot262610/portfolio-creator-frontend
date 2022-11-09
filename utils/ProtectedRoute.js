@@ -9,7 +9,7 @@ export const ProtectedRoute = ({ children }) => {
   const router = useRouter();
 
   useEffect(() => {
-    login && router.replace('/auth');
+    login && router.replace('/auth/login');
   }, [login, router]);
 
   useEffect(() => {

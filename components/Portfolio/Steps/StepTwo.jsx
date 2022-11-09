@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 import TemplateCard from '../TemplateCard';
 
 const TEMPLATES = [
@@ -7,23 +8,30 @@ const TEMPLATES = [
     name: 'elrich bachman - light',
     desc: 'The simple and straight to the point resume. Clean lines and a theme of soft rounded corners.',
     image: 'https://devfolio.io/static/media/template-01.1ffc344c.png',
+    code: 'one',
   },
   {
     id: '2',
     name: 'elrich bachman - light',
     desc: 'The simple and straight to the point resume. Clean lines and a theme of soft rounded corners.',
     image: 'https://devfolio.io/static/media/template-02.202bdc1f.png',
+    code: 'two',
   },
   {
     id: '3',
     name: 'elrich bachman - light',
     desc: 'The simple and straight to the point resume. Clean lines and a theme of soft rounded corners.',
     image: 'https://devfolio.io/static/media/template-03.1e907d27.png',
+    code: 'three',
   },
 ];
 
 const StepTwo = ({ setActive }) => {
-  const [selected, setSelected] = useState('1');
+  const [selected, setSelected] = useState();
+
+  const handleNext = () => {
+    !selected ? toast.error('Select a template') : setActive(2);
+  };
 
   return (
     <div className="flex flex-col items-start justify-center">
@@ -41,7 +49,7 @@ const StepTwo = ({ setActive }) => {
           />
         ))}
       </div>
-      <button onClick={() => setActive(2)} className="btn btn-wide mt-6">
+      <button onClick={handleNext} className="btn btn-wide mt-6">
         Next
       </button>
     </div>
