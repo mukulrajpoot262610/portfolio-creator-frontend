@@ -23,7 +23,7 @@ const Sidebar = () => {
       <Link href="/portfolio">
         <div
           className={`flex flex-col justify-center items-center border w-full p-4 rounded-lg hover:border-black cursor-pointer gap-1 ${
-            pathname === '/portfolio' && 'border-black'
+            pathname.includes('/portfolio') && 'border-black'
           }`}
         >
           <HiOutlinePuzzle className="text-4xl" />

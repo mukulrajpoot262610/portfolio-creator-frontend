@@ -9,7 +9,7 @@ const StepThree = ({ setActive }) => {
 
   return (
     <div className="flex">
-      <div className="flex flex-col items-start justify-center w-1/3">
+      <div className="flex flex-col items-start justify-center w-2/3">
         <h1 className="text-5xl font-bold mb-10">Edit Website!</h1>
         <p className="text-lg text-gray-600 text-center capitalize">
           <span className="font-bold">Template: </span>richard hendricks

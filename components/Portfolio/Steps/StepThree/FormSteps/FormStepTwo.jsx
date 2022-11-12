@@ -1,7 +1,53 @@
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { setPayload } from '../../../../../redux/portfolioSlice';
+import uploadPic from '../../../../../utils/uploadPic';
 
-const FormStepTwo = () => {
+const FormStepTwo = ({ setFormStep }) => {
+  const dispatch = useDispatch();
+  const { portfolio } = useSelector((state) => state.payload);
   const [tags, setTags] = useState([]);
+  const [url, setUrl] = useState('');
+  const [image, setImage] = useState();
+  const [media, setMedia] = useState();
+  const [imageLoading, setImageLoading] = useState(false);
+
+  const [name, setName] = useState(portfolio?.name);
+  const [bio, setBio] = useState(portfolio?.bio);
+  const [email, setEmail] = useState(portfolio?.email);
+  const [phone, setPhone] = useState(portfolio?.phone);
+  const [github, setGithub] = useState(portfolio?.github);
+  const [leetcode, setLeetcode] = useState(portfolio?.leetcode);
+  const [linkedin, setLinkedin] = useState(portfolio?.linkedin);
+  const [twitter, setTwitter] = useState(portfolio?.twitter);
+
+  const uploadImage = async () => {
+    if (!image) {
+      return toast.error('Please add a image');
+    }
+    setImageLoading(true);
+
+    try {
+      const uploadedPic = await uploadPic(media);
+      setUrl(uploadedPic);
+      toast.success('Image uploaded. Continue editing!');
+      setImageLoading(false);
+    } catch (err) {
+      setImageLoading(false);
+      toast.error('Error in Upload');
+    }
+  };
+
+  const captureImage = (e) => {
+    const file = e.target.files[0];
+    setMedia(file);
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = function () {
+      setImage(reader.result);
+    };
+  };
 
   const tagElements = tags.map((i) => {
     return (
@@ -18,17 +64,48 @@ const FormStepTwo = () => {
     );
   });
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(
+      setPayload({
+        data: {
+          ...portfolio,
+          name,
+          bio,
+          email,
+          phone,
+          github,
+          leetcode,
+          linkedin,
+          twitter,
+          skills: tags,
+        },
+      })
+    );
+    setFormStep(2);
+  };
+
   return (
     <div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <h1 className="font-bold text-xl">User Information</h1>
 
         <div className="w-full mt-8 mb-4 flex gap-12 items-center">
-          <div className="avatar">
-            <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-              <img src="https://placeimg.com/192/192/people" />
-            </div>
-          </div>
+          <label className="flex flex-col items-center w-full p-1 border rounded-lg cursor-pointer lg:w-1/2 text-blue border-blue">
+            {image ? (
+              <img
+                src={image}
+                alt="preview"
+                className="rounded-lg object-cover"
+              />
+            ) : (
+              <div className="flex flex-col items-center m-4">
+                <span className="text-5xl">+</span>
+                <span className="text-xs">Select a file</span>
+              </div>
+            )}
+            <input type="file" onChange={captureImage} className="hidden" />
+          </label>
           <div>
             <h3 className="font-medium text-lg">Upload Avatar</h3>
             <p className="text-sm text-gray-400">
@@ -43,6 +120,8 @@ const FormStepTwo = () => {
           <div className="relative w-full">
             <input
               type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               maxLength={60}
               placeholder="Write your name"
               className={`input input-bordered w-full`}
@@ -64,6 +143,8 @@ const FormStepTwo = () => {
           <div className="relative w-full">
             <textarea
               type="text"
+              value={bio}
+              onChange={(e) => setBio(e.target.value)}
               placeholder="Tell me about yourself"
               className={`textarea textarea-bordered w-full text-base`}
               maxLength={600}
@@ -110,6 +191,8 @@ const FormStepTwo = () => {
           <div className="relative w-full">
             <input
               type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               maxLength={60}
               placeholder="e.g. john@domain.com"
               className={`input input-bordered w-full`}
@@ -131,6 +214,8 @@ const FormStepTwo = () => {
           <div className="relative w-full">
             <input
               type="text"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
               maxLength={60}
               placeholder="e.g. +91 5555555555"
               className={`input input-bordered w-full`}
@@ -147,6 +232,104 @@ const FormStepTwo = () => {
         </div>
 
         <h1 className="font-bold text-xl mt-8">Social Links</h1>
+        <div className="w-full form-control">
+          <label className="label">
+            <span className="label-text">GitHub</span>
+          </label>
+          <div className="relative w-full">
+            <input
+              type="text"
+              value={github}
+              onChange={(e) => setGithub(e.target.value)}
+              maxLength={60}
+              placeholder="e.g. https://github.com/"
+              className={`input input-bordered w-full`}
+            />
+          </div>
+          <div className="flex justify-between items-center">
+            <label className=""></label>
+            <label className="">
+              <span className="label-text-alt hover:underline cursor-pointer">
+                max 60 characters
+              </span>
+            </label>
+          </div>
+        </div>
+        <div className="w-full form-control">
+          <label className="label">
+            <span className="label-text">LinkedIn</span>
+          </label>
+          <div className="relative w-full">
+            <input
+              type="text"
+              value={linkedin}
+              onChange={(e) => setLinkedin(e.target.value)}
+              maxLength={60}
+              placeholder="e.g. https://linkedin.com/"
+              className={`input input-bordered w-full`}
+            />
+          </div>
+          <div className="flex justify-between items-center">
+            <label className=""></label>
+            <label className="">
+              <span className="label-text-alt hover:underline cursor-pointer">
+                max 60 characters
+              </span>
+            </label>
+          </div>
+        </div>
+        <div className="w-full form-control">
+          <label className="label">
+            <span className="label-text">Leetcode</span>
+          </label>
+          <div className="relative w-full">
+            <input
+              type="text"
+              value={leetcode}
+              onChange={(e) => setLeetcode(e.target.value)}
+              maxLength={60}
+              placeholder="e.g. https://leetcode.com/"
+              className={`input input-bordered w-full`}
+            />
+          </div>
+          <div className="flex justify-between items-center">
+            <label className=""></label>
+            <label className="">
+              <span className="label-text-alt hover:underline cursor-pointer">
+                max 60 characters
+              </span>
+            </label>
+          </div>
+        </div>
+        <div className="w-full form-control">
+          <label className="label">
+            <span className="label-text">Twitter</span>
+          </label>
+          <div className="relative w-full">
+            <input
+              type="text"
+              value={twitter}
+              onChange={(e) => setTwitter(e.target.value)}
+              maxLength={60}
+              placeholder="e.g. https://twitter.com/"
+              className={`input input-bordered w-full`}
+            />
+          </div>
+          <div className="flex justify-between items-center">
+            <label className=""></label>
+            <label className="">
+              <span className="label-text-alt hover:underline cursor-pointer">
+                max 60 characters
+              </span>
+            </label>
+          </div>
+        </div>
+        <div className="flex justify-end gap-3">
+          <button className="btn btn-sm mt-4" onClick={() => setFormStep(0)}>
+            Prev
+          </button>
+          <button className="btn btn-sm mt-4">Next</button>
+        </div>
       </form>
     </div>
   );
