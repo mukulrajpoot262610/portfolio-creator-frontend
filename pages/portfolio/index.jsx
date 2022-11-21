@@ -28,19 +28,19 @@ const PORTFOLIOS = [
 ];
 
 const Portfolio = () => {
-  const [data, setData] = useState([])
+  const [data, setData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await getAllDomains()
-        setData(data.data)
+        const { data } = await getAllDomains();
+        setData(data.data);
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
-    }
+    };
 
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
 
   return (
     <ProtectedRoute>

@@ -21,25 +21,25 @@ const FormStepTwo = ({ setFormStep }) => {
   const [leetcode, setLeetcode] = useState(portfolio?.leetcode);
   const [linkedin, setLinkedin] = useState(portfolio?.linkedin);
   const [twitter, setTwitter] = useState(portfolio?.twitter);
-  const router = useRouter()
+  const router = useRouter();
 
   const captureImage = async (e) => {
     const file = e.target.files[0];
-    setImageLoading(true)
+    setImageLoading(true);
     try {
       const uploadedPic = await uploadPic(file);
       setUrl(uploadedPic);
       setImageLoading(false);
     } catch (err) {
       setImageLoading(false);
-      console.log(err)
+      console.log(err);
       toast.error('Error in Upload');
     }
   };
 
   const handleNext = () => {
-    router.push(`/portfolio/success?domain=${portfolio?.domain}`)
-  }
+    router.push(`/portfolio/success?domain=${portfolio?.domain}`);
+  };
 
   const tagElements = tags?.map((i) => {
     return (
@@ -77,10 +77,10 @@ const FormStepTwo = ({ setFormStep }) => {
     );
 
     try {
-      const { data } = await buildWebsite(portfolio)
-      console.log(data)
+      const { data } = await buildWebsite(portfolio);
+      console.log(data);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
@@ -97,7 +97,9 @@ const FormStepTwo = ({ setFormStep }) => {
                 alt="preview"
                 className="rounded-lg object-cover h-32"
               />
-            ) : imageLoading ? <div className='animate-pulse'>Uploading...</div> : (
+            ) : imageLoading ? (
+              <div className="animate-pulse">Uploading...</div>
+            ) : (
               <div className="flex flex-col items-center m-4">
                 <span className="text-5xl">+</span>
                 <span className="text-xs">Select a file</span>
@@ -327,7 +329,9 @@ const FormStepTwo = ({ setFormStep }) => {
           <button className="btn btn-sm mt-4" onClick={() => setFormStep(0)}>
             Prev
           </button>
-          <button className="btn btn-sm mt-4" onClick={handleNext}>Next</button>
+          <button className="btn btn-sm mt-4" onClick={handleNext}>
+            Next
+          </button>
         </div>
       </form>
     </div>

@@ -21,7 +21,7 @@ const Navbar = () => {
           <h1 className="text-black font-semibold text-xl ">DEVFolio</h1>
         </div>
         <div className="flex gap-8 justify-center items-center">
-          <p className='hover:underline cursor-pointer'>How it works</p>
+          <p className="hover:underline cursor-pointer">How it works</p>
           <Link href="/auth/login">
             <button className="btn btn-sm">Login</button>
           </Link>
