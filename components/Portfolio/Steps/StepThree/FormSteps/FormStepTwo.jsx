@@ -1,16 +1,16 @@
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPayload } from '../../../../../redux/portfolioSlice';
+import { buildWebsite } from '../../../../../services/api';
 import uploadPic from '../../../../../utils/uploadPic';
 
 const FormStepTwo = ({ setFormStep }) => {
   const dispatch = useDispatch();
   const { portfolio } = useSelector((state) => state.payload);
-  const [tags, setTags] = useState([]);
-  const [url, setUrl] = useState('');
-  const [image, setImage] = useState();
-  const [media, setMedia] = useState();
+  const [tags, setTags] = useState(portfolio?.skills);
+  const [url, setUrl] = useState(portfolio?.avatar);
   const [imageLoading, setImageLoading] = useState(false);
 
   const [name, setName] = useState(portfolio?.name);
@@ -21,35 +21,27 @@ const FormStepTwo = ({ setFormStep }) => {
   const [leetcode, setLeetcode] = useState(portfolio?.leetcode);
   const [linkedin, setLinkedin] = useState(portfolio?.linkedin);
   const [twitter, setTwitter] = useState(portfolio?.twitter);
+  const router = useRouter()
 
-  const uploadImage = async () => {
-    if (!image) {
-      return toast.error('Please add a image');
-    }
-    setImageLoading(true);
-
+  const captureImage = async (e) => {
+    const file = e.target.files[0];
+    setImageLoading(true)
     try {
-      const uploadedPic = await uploadPic(media);
+      const uploadedPic = await uploadPic(file);
       setUrl(uploadedPic);
-      toast.success('Image uploaded. Continue editing!');
       setImageLoading(false);
     } catch (err) {
       setImageLoading(false);
+      console.log(err)
       toast.error('Error in Upload');
     }
   };
 
-  const captureImage = (e) => {
-    const file = e.target.files[0];
-    setMedia(file);
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = function () {
-      setImage(reader.result);
-    };
-  };
+  const handleNext = () => {
+    router.push(`/portfolio/success?domain=${portfolio?.domain}`)
+  }
 
-  const tagElements = tags.map((i) => {
+  const tagElements = tags?.map((i) => {
     return (
       <>
         {i && (
@@ -64,7 +56,7 @@ const FormStepTwo = ({ setFormStep }) => {
     );
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(
       setPayload({
@@ -72,6 +64,7 @@ const FormStepTwo = ({ setFormStep }) => {
           ...portfolio,
           name,
           bio,
+          avatar: url,
           email,
           phone,
           github,
@@ -82,7 +75,13 @@ const FormStepTwo = ({ setFormStep }) => {
         },
       })
     );
-    setFormStep(2);
+
+    try {
+      const { data } = await buildWebsite(portfolio)
+      console.log(data)
+    } catch (err) {
+      console.log(err)
+    }
   };
 
   return (
@@ -91,14 +90,14 @@ const FormStepTwo = ({ setFormStep }) => {
         <h1 className="font-bold text-xl">User Information</h1>
 
         <div className="w-full mt-8 mb-4 flex gap-12 items-center">
-          <label className="flex flex-col items-center w-full p-1 border rounded-lg cursor-pointer lg:w-1/2 text-blue border-blue">
-            {image ? (
+          <label className="flex flex-col items-center w-full p-1 border rounded-lg cursor-pointer lg:w-1/2 text-blue border-blue h-40 justify-center">
+            {url && !imageLoading ? (
               <img
-                src={image}
+                src={url}
                 alt="preview"
-                className="rounded-lg object-cover"
+                className="rounded-lg object-cover h-32"
               />
-            ) : (
+            ) : imageLoading ? <div className='animate-pulse'>Uploading...</div> : (
               <div className="flex flex-col items-center m-4">
                 <span className="text-5xl">+</span>
                 <span className="text-xs">Select a file</span>
@@ -167,7 +166,7 @@ const FormStepTwo = ({ setFormStep }) => {
           <div className="relative w-full">
             <input
               type="text"
-              value={tags.join(',')}
+              value={tags?.join(',')}
               onChange={(e) => setTags(e.target.value.split(','))}
               placeholder="Use comma (,) to add skill"
               className={`input input-bordered w-full text-base`}
@@ -328,7 +327,7 @@ const FormStepTwo = ({ setFormStep }) => {
           <button className="btn btn-sm mt-4" onClick={() => setFormStep(0)}>
             Prev
           </button>
-          <button className="btn btn-sm mt-4">Next</button>
+          <button className="btn btn-sm mt-4" onClick={handleNext}>Next</button>
         </div>
       </form>
     </div>

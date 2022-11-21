@@ -24,6 +24,8 @@ export const verifyEmail = (data) => api.post('/api/verify-email', data);
 export const requestEmailVerification = () => api.get('/api/verify-email');
 
 export const checkDomain = (data) => api.post('/api/check-domain', data);
+export const buildWebsite = (data) => api.post('/api/create-website', data);
+export const getAllDomains = () => api.get('/api/get-all-domains');
 
 // UPDATE
 api.interceptors.response.use(

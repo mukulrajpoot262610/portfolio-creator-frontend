@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import FormStepFour from './FormSteps/FormStepFour';
 import FormStepOne from './FormSteps/FormStepOne';
-import FormStepThree from './FormSteps/FormStepThree';
 import FormStepTwo from './FormSteps/FormStepTwo';
 
 const StepThree = ({ setActive }) => {
@@ -34,7 +32,7 @@ const StepThree = ({ setActive }) => {
           >
             2. User Information
           </a>
-          <a
+          {/* <a
             className={`tab ${formStep === 2 && 'tab-active font-bold'}`}
             onClick={() => setFormStep(2)}
           >
@@ -45,14 +43,14 @@ const StepThree = ({ setActive }) => {
             onClick={() => setFormStep(3)}
           >
             4. Testinomials
-          </a>
+          </a> */}
         </div>
 
         <div className="w-full">
           {formStep === 0 && <FormStepOne setFormStep={setFormStep} />}
           {formStep === 1 && <FormStepTwo setFormStep={setFormStep} />}
-          {formStep === 2 && <FormStepThree setFormStep={setFormStep} />}
-          {formStep === 3 && <FormStepFour setFormStep={setFormStep} />}
+          {/* {formStep === 2 && <FormStepThree setFormStep={setFormStep} />}
+          {formStep === 3 && <FormStepFour setFormStep={setFormStep} />} */}
         </div>
       </div>
     </div>

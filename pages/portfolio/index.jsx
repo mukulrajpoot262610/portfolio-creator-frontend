@@ -1,8 +1,9 @@
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BiPlus } from 'react-icons/bi';
 import Sidebar from '../../components/dashboard/Sidebar';
 import PortfolioCard from '../../components/Portfolio/PortfolioCard';
+import { getAllDomains } from '../../services/api';
 import { ProtectedRoute } from '../../utils/ProtectedRoute';
 
 const PORTFOLIOS = [
@@ -27,6 +28,20 @@ const PORTFOLIOS = [
 ];
 
 const Portfolio = () => {
+  const [data, setData] = useState([])
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await getAllDomains()
+        setData(data.data)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
+    fetchData()
+  }, [])
+
   return (
     <ProtectedRoute>
       <div className="grid grid-cols-12 min-h-screen">
@@ -46,7 +61,7 @@ const Portfolio = () => {
             </div>
 
             <div className="w-full mt-10  flex flex-col gap-4">
-              {PORTFOLIOS.map((portfolio) => (
+              {data.map((portfolio) => (
                 <PortfolioCard key={portfolio.id} data={portfolio} />
               ))}
             </div>
